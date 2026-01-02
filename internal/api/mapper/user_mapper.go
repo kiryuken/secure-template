@@ -3,8 +3,8 @@ package mapper
 // User mapper - converts between domain models and DTOs
 
 import (
-	"github.com/kiryuken/secure-template/internal/api/dto"
-	"github.com/kiryuken/secure-template/internal/domain/models"
+	"github.com/kiryuken/max-secure/internal/api/dto"
+	"github.com/kiryuken/max-secure/internal/domain/models"
 )
 
 // UserToDTO converts User model to UserDTO

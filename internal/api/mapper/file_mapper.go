@@ -3,8 +3,8 @@ package mapper
 // File mapper - converts between file models and DTOs
 
 import (
-	"github.com/kiryuken/secure-template/internal/api/dto"
-	"github.com/kiryuken/secure-template/internal/domain/models"
+	"github.com/kiryuken/max-secure/internal/api/dto"
+	"github.com/kiryuken/max-secure/internal/domain/models"
 )
 
 // FileToDTO converts File model to FileDTO
