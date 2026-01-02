@@ -8,12 +8,6 @@ func Truncate() string {
 	return ""
 }
 
-// SanitizeFilename sanitizes filename for safe storage
-func SanitizeFilename() string {
-	// TODO: Implement
-	return ""
-}
-
 // GenerateSlug generates URL-friendly slug
 func GenerateSlug() string {
 	// TODO: Implement

@@ -2,48 +2,46 @@ package routes
 
 // Router configuration and route registration
 // Uses gorilla/mux for routing
+// Individual route groups are in separate files:
+// - auth_routes.go
+// - user_routes.go
+// - file_routes.go
+// - audit_routes.go
+// - health_routes.go
 
 type Router struct {
-	// TODO: Add handler dependencies
+	// TODO: Add route handler dependencies
+	// authRoutes   *AuthRoutes
+	// userRoutes   *UserRoutes
+	// fileRoutes   *FileRoutes
+	// auditRoutes  *AuditRoutes
+	// healthRoutes *HealthRoutes
 }
 
-func NewRouter() *Router {
-	return &Router{}
+// NewRouter creates main application router
+func NewRouter( /* route handlers */ ) *Router {
+	return &Router{
+		// TODO: Initialize route handlers
+	}
 }
 
 // SetupRoutes configures all application routes
-func (r *Router) SetupRoutes() {
+func (r *Router) SetupRoutes( /* mux.Router */ ) {
 	// TODO: Setup routes
-	// - Auth routes (/auth/*)
-	// - User routes (/users/*)
-	// - File routes (/files/*)
-	// - Audit routes (/audit/*)
-	// - Health routes (/health/*)
-	// - Metrics routes (/metrics)
-	// - API docs (/swagger/*)
-}
-
-// RegisterAuthRoutes registers authentication routes
-func (r *Router) RegisterAuthRoutes() {
-	// TODO: Implement
-}
-
-// RegisterUserRoutes registers user management routes
-func (r *Router) RegisterUserRoutes() {
-	// TODO: Implement
-}
-
-// RegisterFileRoutes registers file management routes
-func (r *Router) RegisterFileRoutes() {
-	// TODO: Implement
-}
-
-// RegisterAuditRoutes registers audit log routes
-func (r *Router) RegisterAuditRoutes() {
-	// TODO: Implement
-}
-
-// RegisterHealthRoutes registers health check routes
-func (r *Router) RegisterHealthRoutes() {
-	// TODO: Implement
+	// Register all route groups:
+	// - r.authRoutes.Register(router)
+	// - r.userRoutes.Register(router)
+	// - r.fileRoutes.Register(router)
+	// - r.auditRoutes.Register(router)
+	// - r.healthRoutes.Register(router)
+	//
+	// Apply global middleware:
+	// - Request ID
+	// - Logging
+	// - Recovery
+	// - Security headers
+	// - CORS
+	//
+	// API documentation:
+	// - Swagger UI at /swagger/*
 }
