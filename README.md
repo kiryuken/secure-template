@@ -259,67 +259,142 @@ go run cmd/api/main.go
 
 ### Key Files to Implement
 
-1. **Configuration** (`pkg/config/config.go`)
+1. **Configuration** (`pkg/config/`) - **8 modular files**
 
-   - Load environment variables
-   - Validate configuration
-   - Set defaults
+   - `config.go` - Main config struct
+   - `server_config.go` - Server settings (host, port, timeouts)
+   - `database_config.go` - PostgreSQL connection
+   - `redis_config.go` - Redis cache settings
+   - `aws_config.go` - S3 storage config
+   - `auth_config.go` - JWT settings
+   - `email_config.go` - SMTP configuration
+   - `security_config.go` - Security & rate limit settings
+   - `logging_config.go` - Log settings
 
-2. **Database** (`pkg/database/postgres.go`)
+2. **Routes** (`internal/api/routes/`) - **5 modular files**
 
-   - Setup Bun ORM connection
-   - Connection pooling
-   - Health checks
+   - `routes.go` - Main router setup
+   - `auth_routes.go` - Authentication endpoints
+   - `user_routes.go` - User management endpoints
+   - `file_routes.go` - File upload/download endpoints
+   - `audit_routes.go` - Audit log endpoints
+   - `health_routes.go` - Health checks & metrics
 
-3. **Main Server** (`cmd/api/main.go`)
+3. **Middleware** (`internal/api/middleware/`) - **8 files**
 
-   - Initialize dependencies
-   - Setup HTTP server
-   - Register routes and middleware
-   - Graceful shutdown
+   - `auth.go` - JWT validation & RBAC
+   - `ratelimit.go` - Rate limiting (IP/user)
+   - `security.go` - Security headers
+   - `cors.go` - CORS configuration
+   - `request_id.go` - Request ID tracking
+   - `compression.go` - Gzip compression
+   - `timeout.go` - Request timeout
+   - `logging.go`, `recovery.go`, etc.
 
-4. **Handlers** (`internal/api/handlers/`)
+4. **Validators** (`internal/validator/`) - **5 modular files**
 
-   - Implement HTTP request handling
-   - Input validation
-   - Response formatting
+   - `validator.go` - Base validator
+   - `password_validator.go` - Password strength rules
+   - `email_validator.go` - Email validation
+   - `phone_validator.go` - Phone number validation
+   - `file_validator.go` - File type/size validation
+   - `custom_rules.go` - Custom validator rules
 
-5. **Services** (`internal/service/`)
+5. **Auth Helpers** (`internal/auth/`) - **7 files**
 
-   - Implement business logic
-   - Call repositories
-   - Handle transactions
+   - `jwt.go` - JWT token generation
+   - `password.go` - Argon2 password hashing
+   - `totp.go` - TOTP/MFA management
+   - `claims.go` - JWT claims structure
+   - `token_blacklist.go` - Token revocation
+   - `session_manager.go` - Session management
+   - `mfa_backup_codes.go` - MFA backup codes
 
-6. **Repositories** (`internal/repository/`)
-   - Implement database queries with Bun ORM
-   - CRUD operations
-   - Complex queries with filters
+6. **Storage** (`internal/storage/`) - **3 files**
+
+   - `storage.go` - Storage interface
+   - `s3_storage.go` - AWS S3 implementation
+   - `local_storage.go` - Local filesystem
+
+7. **Cache** (`internal/cache/`) - **5 modular files**
+
+   - `cache.go` - Cache interface
+   - `redis_cache.go` - Redis implementation
+   - `session_cache.go` - Session caching
+   - `token_cache.go` - Token blacklist cache
+   - `rate_limit_cache.go` - Rate limit counters
+
+8. **Email Templates** (`internal/email/`) - **5 files**
+
+   - `email.go` - Email service interface
+   - `template_welcome.go` - Welcome email
+   - `template_verification.go` - Email verification
+   - `template_password_reset.go` - Password reset
+   - `template_mfa.go` - MFA notifications
+
+9. **Handlers** (`internal/api/handlers/`) - **Separated by action**
+
+   - `auth_handler.go` + `auth_login.go`, `auth_register.go`, etc.
+   - `user_handler.go` + `user_get.go`, `user_list.go`, etc.
+   - Each action in separate file (max 80 lines)
+
+10. **Services** (`internal/service/`)
+
+    - Business logic with detailed TODO steps
+    - Dependency injection patterns
+
+11. **Repositories** (`internal/repository/`)
+    - Bun ORM query patterns
+    - Optimistic locking, soft deletes
 
 ### Example Implementation Flow
 
-1. **Start with User Management:**
+1. **Start with Configuration:**
 
    ```
-   models/user_model.go →
-   repository/user_repository.go →
-   service/user_service.go →
-   handlers/user_*.go
+   pkg/config/server_config.go →
+   pkg/config/database_config.go →
+   pkg/config/redis_config.go →
+   pkg/config/auth_config.go
    ```
 
-2. **Add Authentication:**
+2. **Implement User Management:**
 
    ```
-   auth/jwt.go →
-   auth/password.go →
-   service/auth_service.go →
-   handlers/auth_*.go →
-   middleware/auth.go
+   internal/domain/models/user_model.go →
+   internal/repository/user_repository.go →
+   internal/service/user_service.go →
+   internal/api/handlers/user_handler.go (base) →
+   internal/api/handlers/user_get.go, user_list.go, user_update.go
    ```
 
-3. **Add Supporting Features:**
-   - Rate limiting (middleware/ratelimit.go)
-   - Audit logging (audit/audit.go)
-   - File uploads (storage/s3.go)
+3. **Add Authentication:**
+
+   ```
+   internal/auth/jwt.go →
+   internal/auth/password.go →
+   internal/auth/claims.go →
+   internal/auth/session_manager.go →
+   internal/service/auth_service.go →
+   internal/api/handlers/auth_login.go, auth_register.go →
+   internal/api/middleware/auth.go
+   ```
+
+4. **Add Supporting Features:**
+
+   - Validators: `internal/validator/password_validator.go`, `email_validator.go`
+   - Rate limiting: `internal/cache/rate_limit_cache.go` + `internal/api/middleware/ratelimit.go`
+   - File uploads: `internal/storage/s3_storage.go` + `internal/validator/file_validator.go`
+   - Email: `internal/email/template_welcome.go`, `template_verification.go`
+   - Audit: `internal/audit/audit.go` + `internal/repository/audit_repository.go`
+
+5. **Wire Everything Together:**
+   ```
+   internal/api/routes/auth_routes.go (register endpoints) →
+   internal/api/routes/user_routes.go (register endpoints) →
+   internal/api/routes/routes.go (setup all routes) →
+   cmd/api/main.go (bootstrap application)
+   ```
 
 ## 📖 Code Structure
 
