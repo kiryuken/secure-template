@@ -1,0 +1,44 @@
+server:
+  host: localhost
+  port: 8080
+  environment: development
+  read_timeout: 60
+  write_timeout: 60
+  idle_timeout: 120
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: password
+  database: max_secure
+  sslmode: disable
+  max_conns: 25
+  min_conns: 5
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+
+jwt:
+  secret: your_jwt_secret
+  access_token_ttl: 900
+  refresh_token_ttl: 604800
+  issuer: max-secure
+
+security:
+  allowed_origins:
+    - http://localhost:3000
+    - http://localhost:8080
+  rate_limit_rps: 100
+  max_upload_size: 10485760
+  password_min_len: 8
+
+logging:
+  level: debug
+  output_path: ./logs/app.log
+  max_size: 100
+  max_backups: 3
+  max_age: 28
