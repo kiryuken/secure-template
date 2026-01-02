@@ -1,6 +1,27 @@
 # Max Secure Template
 
-Enterprise-grade secure web application built with Go, featuring comprehensive security controls, audit logging, and modern DevOps practices.
+🚀 **Production-ready Go boilerplate template** for building enterprise-grade secure web applications with comprehensive security controls, audit logging, and modern DevOps practices.
+
+> **⚠️ This is a template with TODO placeholders** - You need to implement the business logic yourself. All files contain structured comments and implementation guides to help you develop your application quickly.
+
+## 📋 What's Included
+
+This template provides a complete project structure with:
+
+- ✅ **Well-organized folder structure** following clean architecture
+- ✅ **Dependency injection patterns** with clear interfaces
+- ✅ **Detailed TODO comments** explaining what to implement
+- ✅ **Security best practices** (JWT, MFA, encryption, rate limiting)
+- ✅ **Production-ready configs** (Docker, Kubernetes, CI/CD)
+- ✅ **Modular code** with max 80 lines per file for maintainability
+
+## 🎯 Quick Start
+
+1. **Clone this template**
+2. **Search for `// TODO:` comments** across the codebase
+3. **Implement your business logic** following the provided structure
+4. **Configure environment variables** from `.env.example`
+5. **Run and test** your application
 
 ## Features
 
@@ -162,79 +183,237 @@ max-secure/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/max-secure.git
-cd max-secure
+git clone https://github.com/kiryuken/secure-template.git
+cd secure-template
 ```
 
-### 2. Setup environment variables
+### 2. Understand the structure
+
+All implementation files contain `// TODO:` comments with detailed steps:
+
+```go
+// Example from handlers/auth_login.go
+func (h *AuthHandler) Login(ctx context.Context) error {
+    // TODO: Implement
+    // - Validate email & password from request
+    // - Call authService.Login()
+    // - Return JWT tokens
+    // - Log audit trail
+    return nil
+}
+```
+
+### 3. Implement your business logic
+
+Search for `// TODO:` in your IDE to find all implementation points:
+
+- **Handlers**: HTTP request handling
+- **Services**: Business logic layer
+- **Repositories**: Database queries with Bun ORM
+- **Middleware**: Authentication, rate limiting, security headers
+
+### 4. Setup environment variables
 
 ```bash
 cp .env.example .env
 # Edit .env with your configuration
 ```
 
-### 3. Start dependencies with Docker Compose
+### 5. Start dependencies with Docker Compose
 
 ```bash
 docker-compose up -d postgres redis jaeger
 ```
 
-### 4. Run database migrations
+### 6. Install Go dependencies
 
 ```bash
+go mod download
+go mod tidy
+```
+
+### 7. Implement required functionality
+
+Before running, you need to implement:
+
+- Database connection in `pkg/database/`
+- Configuration loading in `pkg/config/`
+- Main server setup in `cmd/api/main.go`
+- At minimum: one working handler + service + repository
+
+### 8. Run database migrations
+
+```bash
+# After implementing migration logic
 make migrate-up
-# or
-./scripts/migrate.sh up
 ```
 
-### 5. Run the application
+### 9. Run the application
 
 ```bash
-# Run API server
-make run-api
-# or
+# After implementing main.go and core dependencies
 go run cmd/api/main.go
-
-# Run worker (in separate terminal)
-make run-worker
-# or
-go run cmd/worker/main.go
 ```
 
-### 6. Access the application
+## 📂 Implementation Guide
+
+### Key Files to Implement
+
+1. **Configuration** (`pkg/config/config.go`)
+
+   - Load environment variables
+   - Validate configuration
+   - Set defaults
+
+2. **Database** (`pkg/database/postgres.go`)
+
+   - Setup Bun ORM connection
+   - Connection pooling
+   - Health checks
+
+3. **Main Server** (`cmd/api/main.go`)
+
+   - Initialize dependencies
+   - Setup HTTP server
+   - Register routes and middleware
+   - Graceful shutdown
+
+4. **Handlers** (`internal/api/handlers/`)
+
+   - Implement HTTP request handling
+   - Input validation
+   - Response formatting
+
+5. **Services** (`internal/service/`)
+
+   - Implement business logic
+   - Call repositories
+   - Handle transactions
+
+6. **Repositories** (`internal/repository/`)
+   - Implement database queries with Bun ORM
+   - CRUD operations
+   - Complex queries with filters
+
+### Example Implementation Flow
+
+1. **Start with User Management:**
+
+   ```
+   models/user_model.go →
+   repository/user_repository.go →
+   service/user_service.go →
+   handlers/user_*.go
+   ```
+
+2. **Add Authentication:**
+
+   ```
+   auth/jwt.go →
+   auth/password.go →
+   service/auth_service.go →
+   handlers/auth_*.go →
+   middleware/auth.go
+   ```
+
+3. **Add Supporting Features:**
+   - Rate limiting (middleware/ratelimit.go)
+   - Audit logging (audit/audit.go)
+   - File uploads (storage/s3.go)
+
+## 📖 Code Structure
+
+All template files follow this pattern:
+
+```go
+type Service struct {
+    // TODO: Add dependencies
+    // repo   repository.Repository
+    // logger logger.Logger
+}
+
+func NewService( /* dependencies */ ) *Service {
+    return &Service{
+        // TODO: Initialize dependencies
+    }
+}
+
+func (s *Service) Method( /* parameters */ ) error {
+    // TODO: Implement
+    // - Step 1: Validate input
+    // - Step 2: Process data
+    // - Step 3: Save to database
+    // - Step 4: Return response
+    return nil
+}
+```
+
+## 🔍 Finding TODOs
+
+Use your IDE to search for TODO comments:
+
+- **VS Code**: `Ctrl+Shift+F` → search for `// TODO:`
+- **GoLand**: `View → Tool Windows → TODO`
+- **Command line**: `grep -r "// TODO:" internal/ pkg/`
+
+## 📦 Dependencies to Install
+
+After implementing core logic, add these packages:
+
+```bash
+go get github.com/uptrace/bun
+go get github.com/uptrace/bun/driver/pgdriver
+go get github.com/golang-jwt/jwt/v5
+go get github.com/pquerna/otp
+go get golang.org/x/crypto/argon2
+go get github.com/go-redis/redis/v8
+go get github.com/aws/aws-sdk-go-v2
+go get go.uber.org/zap
+go get github.com/hibiken/asynq
+# ... see go.mod for complete list
+```
+
+## 🎨 Customization
+
+This template is designed to be customized:
+
+- **Add your models** in `internal/domain/models/`
+- **Add your DTOs** in `internal/api/dto/`
+- **Add your handlers** in `internal/api/handlers/`
+- **Add your services** in `internal/service/`
+- **Add your repositories** in `internal/repository/`
+- **Keep files under 80 lines** for maintainability
+
+## ⚙️ Configuration
+
+After implementing the application, it will be available at:
 
 - API: http://localhost:8080
 - Health Check: http://localhost:8080/health
 - Metrics: http://localhost:8080/metrics
 - Jaeger UI: http://localhost:16686
 
-## Development
+## 🛠️ Development Commands
 
-### Build
+### Build (after implementation)
 
 ```bash
 make build
-# or
-./scripts/build.sh
 ```
 
-### Run Tests
+### Run Tests (after writing tests)
 
 ```bash
 make test
-# or
-./scripts/test.sh
 ```
 
 ### Run Linters
 
 ```bash
 make lint
-# or
-./scripts/lint.sh
 ```
 
-### Database Migrations
+### Database Migrations (after implementation)
 
 ```bash
 # Create new migration
@@ -247,13 +426,15 @@ make migrate-up
 make migrate-down
 ```
 
-## Deployment
+## 🚀 Deployment (Production Ready)
+
+This template includes production-ready deployment configurations.
 
 ### Docker
 
 ```bash
 # Build Docker image
-docker build -t max-secure:latest .
+docker build -t secure-app:latest .
 
 # Run with Docker Compose
 docker-compose up -d
@@ -267,14 +448,38 @@ kubectl apply -f deployments/kubernetes/
 
 # Check deployment status
 kubectl get pods
-kubectl get services
 ```
 
-## API Documentation
+## 📚 Documentation
 
-API documentation is available at `/swagger` when the server is running.
+- **[STRUCTURE.md](docs/STRUCTURE.md)**: Detailed project structure explanation
+- **API Docs**: Available at `/swagger` endpoint (after implementation)
+- **Architecture**: See `docs/architecture/` directory
 
-## Security Considerations
+## ✅ Checklist for Implementation
+
+Use this checklist to track your progress:
+
+- [ ] Implement configuration loading (`pkg/config/`)
+- [ ] Setup database connection (`pkg/database/`)
+- [ ] Implement logger setup (`pkg/logger/`)
+- [ ] Create your domain models (`internal/domain/models/`)
+- [ ] Implement repositories with Bun ORM (`internal/repository/`)
+- [ ] Implement service layer (`internal/service/`)
+- [ ] Implement HTTP handlers (`internal/api/handlers/`)
+- [ ] Setup middleware (`internal/api/middleware/`)
+- [ ] Configure routes (`internal/api/routes/`)
+- [ ] Implement JWT authentication (`internal/auth/`)
+- [ ] Setup Redis caching (`internal/cache/`)
+- [ ] Implement audit logging (`internal/audit/`)
+- [ ] Add rate limiting
+- [ ] Write unit tests
+- [ ] Write integration tests
+- [ ] Setup CI/CD pipeline
+- [ ] Configure production environment
+- [ ] Review security settings
+
+## 🔒 Security Reminders
 
 - Change all default passwords and secrets
 - Use strong JWT secrets (32+ characters)
@@ -294,12 +499,30 @@ Key variables:
 
 - `DB_*`: Database configuration
 - `REDIS_*`: Redis configuration
-- `JWT_SECRET`: JWT signing secret
-- `ENCRYPTION_KEY`: Data encryption key
+- `JWT_SECRET`: JWT signing secret (32+ characters)
+- `ENCRYPTION_KEY`: Data encryption key (32 bytes)
 - `AWS_*`: AWS/S3 configuration
 - `SMTP_*`: Email configuration
 
-## Testing
+Example `.env`:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your-password
+DB_NAME=secure_db
+
+JWT_SECRET=your-strong-secret-key-min-32-chars
+JWT_EXPIRY=15m
+
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+ENCRYPTION_KEY=your-32-byte-encryption-key
+```
+
+## 🧪 Testing (After Implementation)
 
 ```bash
 # Run all tests
@@ -312,7 +535,7 @@ go test -cover ./...
 go test -tags=integration ./tests/integration/...
 ```
 
-## Monitoring
+## 📊 Monitoring (After Implementation)
 
 ### Metrics (Prometheus)
 
@@ -335,14 +558,35 @@ Logs are structured (JSON) and written to:
 - Console (stdout)
 - File (`./logs/app.log`)
 
-## Contributing
+## 💡 Tips for Development
+
+1. **Start Small**: Implement one feature at a time (e.g., user CRUD first)
+2. **Follow the TODOs**: Each file has step-by-step implementation guides
+3. **Test as You Go**: Write tests for each component you implement
+4. **Use the Structure**: Don't fight the architecture, follow the patterns
+5. **Keep Files Small**: Stick to the 80-line guideline for maintainability
+6. **Check Examples**: See `docs/STRUCTURE.md` for more detailed explanations
+
+## 🤝 Contributing
+
+This is a template repository. To contribute:
 
 1. Fork the repository
 2. Create a feature branch
-3. Make your changes
+3. Improve the template structure or add documentation
 4. Run tests and linters
 5. Submit a pull request
 
-## License
+## 📝 License
 
 MIT License - see LICENSE file
+
+## 🔗 Links
+
+- **Repository**: https://github.com/kiryuken/secure-template
+- **Issues**: Report bugs or request features
+- **Discussions**: Ask questions or share your implementations
+
+---
+
+**Remember**: This is a template with TODO placeholders. You need to implement the actual business logic. Happy coding! 🚀
