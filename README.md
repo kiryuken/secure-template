@@ -1,21 +1,21 @@
 # Max Secure Template
 
-🚀 **Production-ready Go boilerplate template** for building enterprise-grade secure web applications with comprehensive security controls, audit logging, and modern DevOps practices.
+ **Production-ready Go boilerplate template** for building enterprise-grade secure web applications with comprehensive security controls, audit logging, and modern DevOps practices.
 
-> **⚠️ This is a template with TODO placeholders** - You need to implement the business logic yourself. All files contain structured comments and implementation guides to help you develop your application quickly.
+> ** This is a template with TODO placeholders** - You need to implement the business logic yourself. All files contain structured comments and implementation guides to help you develop your application quickly.
 
-## 📋 What's Included
+##  What's Included
 
 This template provides a complete project structure with:
 
-- ✅ **Well-organized folder structure** following clean architecture
-- ✅ **Dependency injection patterns** with clear interfaces
-- ✅ **Detailed TODO comments** explaining what to implement
-- ✅ **Security best practices** (JWT, MFA, encryption, rate limiting)
-- ✅ **Production-ready configs** (Docker, Kubernetes, CI/CD)
-- ✅ **Modular code** with max 80 lines per file for maintainability
+-  **Well-organized folder structure** following clean architecture
+-  **Dependency injection patterns** with clear interfaces
+-  **Detailed TODO comments** explaining what to implement
+-  **Security best practices** (JWT, MFA, encryption, rate limiting)
+-  **Production-ready configs** (Docker, Kubernetes, CI/CD)
+-  **Modular code** with max 80 lines per file for maintainability
 
-## 🎯 Quick Start
+##  Quick Start
 
 1. **Clone this template**
 2. **Search for `// TODO:` comments** across the codebase
@@ -25,7 +25,7 @@ This template provides a complete project structure with:
 
 ## Features
 
-### 🔐 Security
+###  Security
 
 - **Authentication & Authorization**
 
@@ -56,7 +56,7 @@ This template provides a complete project structure with:
   - User activity tracking
   - Export capabilities
 
-### 🚀 Infrastructure
+###  Infrastructure
 
 - **Database**
 
@@ -84,7 +84,7 @@ This template provides a complete project structure with:
   - Email queue
   - File processing queue
 
-### 📊 Observability
+###  Observability
 
 - **Logging**
 
@@ -255,7 +255,7 @@ make migrate-up
 go run cmd/api/main.go
 ```
 
-## 📂 Implementation Guide
+##  Implementation Guide
 
 ### Key Files to Implement
 
@@ -396,7 +396,7 @@ go run cmd/api/main.go
    cmd/api/main.go (bootstrap application)
    ```
 
-## 📖 Code Structure
+##  Code Structure
 
 All template files follow this pattern:
 
@@ -423,7 +423,7 @@ func (s *Service) Method( /* parameters */ ) error {
 }
 ```
 
-## 🔍 Finding TODOs
+##  Finding TODOs
 
 Use your IDE to search for TODO comments:
 
@@ -431,7 +431,7 @@ Use your IDE to search for TODO comments:
 - **GoLand**: `View → Tool Windows → TODO`
 - **Command line**: `grep -r "// TODO:" internal/ pkg/`
 
-## 📦 Dependencies to Install
+##  Dependencies to Install
 
 After implementing core logic, add these packages:
 
@@ -448,7 +448,7 @@ go get github.com/hibiken/asynq
 # ... see go.mod for complete list
 ```
 
-## 🎨 Customization
+##  Customization
 
 This template is designed to be customized:
 
@@ -459,7 +459,7 @@ This template is designed to be customized:
 - **Add your repositories** in `internal/repository/`
 - **Keep files under 80 lines** for maintainability
 
-## ⚙️ Configuration
+##  Configuration
 
 After implementing the application, it will be available at:
 
@@ -468,7 +468,7 @@ After implementing the application, it will be available at:
 - Metrics: http://localhost:8080/metrics
 - Jaeger UI: http://localhost:16686
 
-## 🛠️ Development Commands
+##  Development Commands
 
 ### Build (after implementation)
 
@@ -501,7 +501,7 @@ make migrate-up
 make migrate-down
 ```
 
-## 🚀 Deployment (Production Ready)
+##  Deployment (Production Ready)
 
 This template includes production-ready deployment configurations.
 
@@ -525,13 +525,13 @@ kubectl apply -f deployments/kubernetes/
 kubectl get pods
 ```
 
-## 📚 Documentation
+##  Documentation
 
 - **[STRUCTURE.md](docs/STRUCTURE.md)**: Detailed project structure explanation
 - **API Docs**: Available at `/swagger` endpoint (after implementation)
 - **Architecture**: See `docs/architecture/` directory
 
-## ✅ Checklist for Implementation
+##  Checklist for Implementation
 
 Use this checklist to track your progress:
 
@@ -554,7 +554,7 @@ Use this checklist to track your progress:
 - [ ] Configure production environment
 - [ ] Review security settings
 
-## 🔒 Security Reminders
+##  Security Reminders
 
 - Change all default passwords and secrets
 - Use strong JWT secrets (32+ characters)
@@ -597,7 +597,7 @@ REDIS_PORT=6379
 ENCRYPTION_KEY=your-32-byte-encryption-key
 ```
 
-## 🧪 Testing (After Implementation)
+##  Testing (After Implementation)
 
 ```bash
 # Run all tests
@@ -610,7 +610,7 @@ go test -cover ./...
 go test -tags=integration ./tests/integration/...
 ```
 
-## 📊 Monitoring (After Implementation)
+##  Monitoring (After Implementation)
 
 ### Metrics (Prometheus)
 
@@ -633,7 +633,7 @@ Logs are structured (JSON) and written to:
 - Console (stdout)
 - File (`./logs/app.log`)
 
-## 💡 Tips for Development
+##  Tips for Development
 
 1. **Start Small**: Implement one feature at a time (e.g., user CRUD first)
 2. **Follow the TODOs**: Each file has step-by-step implementation guides
@@ -642,7 +642,7 @@ Logs are structured (JSON) and written to:
 5. **Keep Files Small**: Stick to the 80-line guideline for maintainability
 6. **Check Examples**: See `docs/STRUCTURE.md` for more detailed explanations
 
-## 🤝 Contributing
+##  Contributing
 
 This is a template repository. To contribute:
 
@@ -652,11 +652,11 @@ This is a template repository. To contribute:
 4. Run tests and linters
 5. Submit a pull request
 
-## 📝 License
+##  License
 
 MIT License - see LICENSE file
 
-## 🔗 Links
+##  Links
 
 - **Repository**: https://github.com/kiryuken/secure-template
 - **Issues**: Report bugs or request features
@@ -664,4 +664,4 @@ MIT License - see LICENSE file
 
 ---
 
-**Remember**: This is a template with TODO placeholders. You need to implement the actual business logic. Happy coding! 🚀
+**Remember**: This is a template with TODO placeholders. You need to implement the actual business logic.
